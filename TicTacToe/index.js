@@ -5,14 +5,18 @@ let gameArray = [];
 let turnText = document.getElementById("turnText");
 let resetButton = document.getElementById("resetButton");
 
-let turn = "x";
-let winner;
+let turn = "x"; 
+let turnCount = 0;
+let winner = undefined;
 
 for (let i = 0; i < squares.length; i++) {
     squares[i].addEventListener("click", () => play(i), {once: true});
 }
 
+resetButton.addEventListener("click", () => reset());
+
 function play(index) {
+    turnCount++;
     if (turn == "x") {
         // Set value clicked
         gameArray[index] = "x";
@@ -33,7 +37,11 @@ function play(index) {
         //turnText.setAttribute("color", "blue");
     }
 
-    // Check for winners (this code is hilarious)
+    checkWin();
+}
+
+// This code is insane
+function checkWin() {
     if (winner == undefined) {
         if (gameArray[0] == gameArray[1] && gameArray[1] == gameArray[2] && gameArray[0] != undefined) winner = gameArray[0];
         else if (gameArray[3] == gameArray[4] && gameArray[4] == gameArray[5] && gameArray[3] != undefined) winner = gameArray[3];
@@ -45,7 +53,18 @@ function play(index) {
         else if (gameArray[2] == gameArray[4] && gameArray[4] == gameArray[6] && gameArray[2] != undefined) winner = gameArray[2];
     } 
     if (winner != undefined) {
-        console.log(winner)
         turnText.innerHTML = (winner == "x" ? "&#10060; wins!" : "&#11093 wins!");
+    } else if (turnCount == 9) {
+        turnText.innerHTML = "Draw!";
+    }
+}
+
+function reset() {
+    gameArray = [];
+    turn = "x";
+    turnText.innerHTML = "&#10060;'s turn";
+    winner = undefined;
+    for (i of squares) {
+        i.innerHTML = "";
     }
 }
