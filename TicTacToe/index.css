@@ -69,6 +69,14 @@
     cursor: pointer;
 }
 
+.square {
+    user-select: none;
+}
+
+.square:hover {
+    cursor: pointer;
+}
+
 /*Column 1*/
 .square1, .square4, .square7 {
     /*Group these two lines*/
