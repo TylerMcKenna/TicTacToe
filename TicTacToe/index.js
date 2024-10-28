@@ -25,7 +25,6 @@ function play(index) {
         // Change turn
         turn = "o";
         turnText.innerHTML = "&#11093;'s turn";  
-        turnText.setAttribute("color", "blue");
     } else {
         // Set value clicked
         gameArray[index] = "o";
@@ -34,7 +33,6 @@ function play(index) {
         // Change turn
         turn = "x";
         turnText.innerHTML = "&#10060;'s turn";
-        //turnText.setAttribute("color", "blue");
     }
 
     checkWin();
@@ -66,5 +64,8 @@ function reset() {
     winner = undefined;
     for (i of squares) {
         i.innerHTML = "";
+    }
+    for (let i = 0; i < squares.length; i++) {
+        squares[i].addEventListener("click", () => play(i), {once: true});
     }
 }
